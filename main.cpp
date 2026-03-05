@@ -7,6 +7,7 @@ struct BiList {
   BiList<T>* prev;
   void push_back(T data);
   void push_front(T data);
+  void print();
 };
 
 template<class T>
@@ -34,6 +35,18 @@ void BiList<T>::push_back(T data) {
 }
 
 template<class T>
+void BiList<T>::print() {
+  BiList<T>* list_ptr = this;
+  while (list_ptr->prev != nullptr) {
+    list_ptr = list_ptr->prev;
+  }
+  while (list_ptr != nullptr) {
+    std::cout << list_ptr->val << "\n";
+    list_ptr = list_ptr->next;
+  }
+}
+
+template<class T>
 void BiList<T>::push_front(T data) {
   BiList<T>* change = this;
   while (change->prev != nullptr) {
@@ -49,9 +62,5 @@ int main() {
   BiList<int> q{0, nullptr, nullptr};
   q.push_back(3);
   q.push_front(7);
-  BiList<int>* c = &q;
-  while (c != nullptr) {
-    std::cout << c->val << std::endl;
-    c = c->next;
-  }
+  q.print();
 }
