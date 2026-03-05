@@ -8,6 +8,7 @@ struct BiList {
   void push_back(T data);
   void push_front(T data);
   void print();
+  size_t size();
 };
 
 template<class T>
@@ -58,9 +59,33 @@ void BiList<T>::push_front(T data) {
   change->prev->next = change;
 }
 
+template<class T>
+size_t BiList<T>::size() {
+  BiList<T>* now = this;
+  while (now->prev != nullptr) {
+    now = now->prev;
+  }
+  size_t count = 0;
+  while (now != nullptr) {
+    count++;
+    now = now->next;
+  }
+  return count;
+}
+
 int main() {
-  BiList<int> q{0, nullptr, nullptr};
-  q.push_back(3);
-  q.push_front(7);
-  q.print();
+  int* massive_to_convert = new int[3];
+  massive_to_convert[0] = 3;
+  massive_to_convert[1] = 1;
+  massive_to_convert[2] = 2;
+  BiList<int>* list_ptr = new BiList<int>;
+  list_ptr->val = massive_to_convert[0];
+  list_ptr->next = nullptr;
+  list_ptr->prev = nullptr;
+  for (size_t i = 1; i < 3; ++i) {
+    list_ptr->push_back(massive_to_convert[i]);
+  }
+  list_ptr->print();
+  delete[] massive_to_convert;
+  clear(list_ptr);
 }
